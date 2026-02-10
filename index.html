@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrangeSmp | Survival Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff9800;
+            --bg: #0f0f0f;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --glass: rgba(255, 152, 0, 0.15);
+            --error: #ff4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        #canvas-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,152,0,0.3);
+        }
+
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); cursor: pointer; letter-spacing: 2px; }
+
+        nav a {
+            color: white; text-decoration: none; margin-left: 30px;
+            font-weight: 700; transition: 0.3s; font-size: 0.85rem; text-transform: uppercase;
+        }
+        nav a:hover { color: var(--primary); }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 15vw, 9rem);
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff 40%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(255,152,0,0.4));
+        }
+
+        .performance-tag {
+            background: rgba(255, 152, 0, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .ip-card {
+            background: rgba(255, 152, 0, 0.1);
+            border: 2px solid var(--primary);
+            padding: 20px 60px;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 40px 0;
+        }
+        .ip-card:hover { transform: scale(1.05); background: var(--primary); color: #000; }
+
+        .countdown { display: flex; gap: 15px; }
+        .unit { 
+            background: rgba(255,255,255,0.05); 
+            padding: 15px; border-radius: 12px; 
+            min-width: 90px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .unit span { display: block; font-size: 2.2rem; font-weight: 900; }
+        .unit-label { font-size: 0.7rem; color: var(--primary); font-weight: 800; }
+
+        section { padding: 100px 8%; }
+        h2 { font-size: 3rem; text-align: center; margin-bottom: 60px; font-weight: 900; }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .rule-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 5px solid var(--primary);
+            transition: 0.3s;
+        }
+        .rule-card.strict { border-left-color: var(--error); }
+        .rule-card:hover { background: rgba(255,255,255,0.06); transform: translateX(10px); }
+        
+        .rule-card h3 { margin-bottom: 10px; font-size: 1.4rem; }
+        .rule-card p { opacity: 0.7; font-size: 0.95rem; line-height: 1.6; }
+
+        .discord-section {
+            text-align: center;
+            background: rgba(255,152,0,0.05);
+            padding: 80px 40px;
+            border-radius: 40px;
+            border: 1px solid var(--glass);
+        }
+
+        .discord-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: #5865F2;
+            color: white;
+            text-decoration: none;
+            font-weight: 900;
+            border-radius: 15px;
+            margin-top: 30px;
+            transition: 0.3s;
+        }
+        .discord-btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(88,101,242,0.4); }
+
+        footer { padding: 40px; text-align: center; opacity: 0.4; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <header>
+        <div class="logo">ORANGESMP</div>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#rules">Rules</a>
+            <a href="#discord">Discord</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="performance-tag reveal">SERVER CAPACITY: 55+ PLAYERS (SCALING SOON) 🚀</div>
+        <h1 class="reveal">OrangeSmp</h1>
+        <p style="font-size: 1.4rem; font-weight: 700; color: #aaa; margin-top: 10px;">Premium Survival Community</p>
+        
+        <div class="ip-card reveal" onclick="copyIP()" id="ipText">
+            OrangeSMP.xyz
+        </div>
+
+        <div class="countdown reveal">
+            <div class="unit"><span id="days">00</span><div class="unit-label">DAYS</div></div>
+            <div class="unit"><span id="hours">00</span><div class="unit-label">HOURS</div></div>
+            <div class="unit"><span id="mins">00</span><div class="unit-label">MINS</div></div>
+            <div class="unit"><span id="secs">00</span><div class="unit-label">SECS</div></div>
+        </div>
+    </section>
+
+    <section id="rules">
+        <h2 class="reveal">Server <span style="color: var(--primary);">Guidelines</span></h2>
+        <div class="rules-grid">
+            <div class="rule-card reveal">
+                <h3 style="color: var(--primary);">High-End Performance</h3>
+                <p>Our hardware is currently optimized for <strong>55 players</strong>. As the community grows, we will scale our capacity even higher to ensure lag-free play.</p>
+            </div>
+            <div class="rule-card strict reveal">
+                <h3 style="color: var(--error);">Fair Play Only</h3>
+                <p>Any use of hacked clients, x-ray packs, or external scripts is strictly prohibited. We maintain a level playing field for everyone.</p>
+            </div>
+            <div class="rule-card strict reveal">
+                <h3 style="color: var(--error);">Zero Exploit Policy</h3>
+                <p>Do not abuse glitches or world exploits. Discovering a bug and using it for gain results in an immediate ban. Report bugs to staff.</p>
+            </div>
+            <div class="rule-card reveal">
+                <h3 style="color: var(--primary);">Media Applications</h3>
+                <p>Content creators with 5,000+ subscribers can apply for a specialized Media Rank once the server officially launches.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="discord">
+        <div class="discord-section reveal">
+            <h2 style="margin-bottom: 20px;">Join the Conversation</h2>
+            <p style="opacity: 0.8; max-width: 600px; margin: 0 auto;">Connect with other players, get staff support, and stay updated on our May 12th launch.</p>
+            <a href="https://discord.gg/QkUANb7G" class="discord-btn">JOIN DISCORD</a>
+        </div>
+    </section>
+
+    <footer>
+        ORANGESMP • INDEPENDENT SURVIVAL COMMUNITY
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 152, 0, 0.4)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        for (let i = 0; i < 70; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        function copyIP() {
+            navigator.clipboard.writeText('OrangeSMP.xyz');
+            const el = document.getElementById('ipText');
+            el.innerText = "COPIED!";
+            setTimeout(() => el.innerText = "OrangeSMP.xyz", 2000);
+        }
+
+        const target = new Date("May 12, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff <= 0) return;
+            document.getElementById('days').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
+            document.getElementById('hours').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById('mins').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById('secs').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        }, 1000);
+    </script>
+</body>
+</html>
