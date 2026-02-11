@@ -14,7 +14,6 @@
             --error: #ff4444;
         }
 
-        /* Smooth scaling and reset */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
@@ -33,7 +32,6 @@
             background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
         }
 
-        /* Dynamic Reveal Animation */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
@@ -41,7 +39,6 @@
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Responsive Header */
         header {
             display: flex;
             justify-content: space-between;
@@ -70,7 +67,6 @@
         }
         nav a:hover { color: var(--primary); }
 
-        /* Flexible Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -85,12 +81,13 @@
             background: rgba(255, 152, 0, 0.1);
             color: var(--primary);
             border: 1px solid var(--primary);
-            padding: 6px clamp(12px, 2vw, 20px);
+            padding: 8px clamp(15px, 2vw, 25px);
             border-radius: 50px;
             font-weight: 900;
             font-size: clamp(0.65rem, 1.5vw, 0.8rem);
             margin-bottom: 20px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .hero h1 {
@@ -111,7 +108,6 @@
             margin-top: 15px;
         }
 
-        /* IP Card - Optimized for Tapping */
         .ip-card {
             background: rgba(255, 152, 0, 0.08);
             border: 2px solid var(--primary);
@@ -127,7 +123,6 @@
         }
         .ip-card:active { transform: scale(0.97); background: var(--primary); color: black; }
 
-        /* Countdown Grid */
         .countdown { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -144,7 +139,6 @@
         .unit span { display: block; font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 900; }
         .unit-label { font-size: 0.65rem; color: var(--primary); font-weight: 800; }
 
-        /* Grid for Rules & Info */
         .rules-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -165,7 +159,6 @@
         .rule-card h3 { font-size: 1.3rem; margin-bottom: 12px; }
         .rule-card p { font-size: 0.9rem; opacity: 0.7; }
 
-        /* Discord Button Styling */
         .discord-btn {
             display: inline-block;
             padding: 18px 45px;
@@ -182,7 +175,6 @@
 
         footer { padding: 40px 5%; text-align: center; opacity: 0.5; font-size: 0.75rem; }
 
-        /* Tablet/Desktop Logic */
         @media (min-width: 768px) {
             .countdown { grid-template-columns: repeat(4, 1fr); }
             section { padding: 100px 10%; }
@@ -203,7 +195,7 @@
     </header>
 
     <section class="hero" id="home">
-        <div class="performance-tag reveal">CAPACITY: 55+ PLAYERS (SCALING SOON) 🚀</div>
+        <div class="performance-tag reveal">WE EXPECT TO HANDLE UP TO 55 PLAYERS MAX 🚀</div>
         <h1 class="reveal">OrangeSmp</h1>
         <p class="reveal">The Next Generation of Survival</p>
         
@@ -223,20 +215,20 @@
         <h2 class="reveal" style="text-align: center; margin-bottom: 50px; font-size: clamp(2rem, 6vw, 3.5rem);">Server <span style="color: var(--primary);">Laws</span></h2>
         <div class="rules-grid">
             <div class="rule-card reveal">
-                <h3 style="color: var(--primary);">Power & Speed</h3>
-                <p>Engineered to handle 55 concurrent players with zero TPS loss. We scale our hardware dynamically as our player base grows.</p>
+                <h3 style="color: var(--primary);">Player Load</h3>
+                <p>We are currently optimized to handle up to 55 players at once. As our community expands, we plan to increase this limit.</p>
             </div>
             <div class="rule-card strict reveal">
                 <h3 style="color: var(--error);">Fair Play Only</h3>
-                <p>Modified clients, x-ray, and automation scripts are strictly prohibited. We protect the integrity of your survival experience.</p>
+                <p>Hacked clients, x-ray, and automation scripts are strictly prohibited to protect the survival experience.</p>
             </div>
             <div class="rule-card strict reveal">
-                <h3 style="color: var(--error);">Integrity First</h3>
-                <p>Using bugs or glitches for personal gain is a banable offense. Help us keep the game clean by reporting bugs to the team.</p>
+                <h3 style="color: var(--error);">Zero Exploits</h3>
+                <p>Using bugs or glitches for personal gain is a banable offense. Report any bugs to the staff immediately.</p>
             </div>
             <div class="rule-card reveal">
                 <h3 style="color: var(--primary);">Creator Rank</h3>
-                <p>If you have 5k+ subscribers, you are eligible for our Media Rank. Applications open on our Discord server after launch.</p>
+                <p>If you have 5k+ subscribers, apply for Media Rank on our Discord server after the official launch.</p>
             </div>
         </div>
     </section>
@@ -244,8 +236,8 @@
     <section id="discord" style="text-align: center; padding-bottom: 100px;">
         <div class="reveal" style="background: rgba(255,152,0,0.05); padding: clamp(40px, 8vw, 80px) 20px; border-radius: 30px; border: 1px solid var(--glass);">
             <h2 style="margin-bottom: 15px;">Community Hub</h2>
-            <p style="opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: clamp(0.85rem, 2vw, 1.1rem);">Get the latest announcements, join the whitelist, and chat with staff before the May 12th launch.</p>
-            <a href="https://discord.gg/QkUANb7G" class="discord-btn">JOIN DISCORD</a>
+            <p style="opacity: 0.8; max-width: 600px; margin: 0 auto; font-size: clamp(0.85rem, 2vw, 1.1rem);">Join the whitelist and chat with staff before the May 12th launch.</p>
+            <a href="https://discord.gg/CeAyz9cMBS" class="discord-btn">JOIN DISCORD</a>
         </div>
     </section>
 
@@ -254,7 +246,6 @@
     </footer>
 
     <script>
-        // Particle Engine
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -296,13 +287,11 @@
         }
         animate();
 
-        // Reveal on Scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Copy IP
         function copyIP() {
             navigator.clipboard.writeText('OrangeSMP.xyz');
             const el = document.getElementById('ipText');
@@ -310,7 +299,6 @@
             setTimeout(() => el.innerText = "OrangeSMP.xyz", 2000);
         }
 
-        // Timer
         const target = new Date("May 12, 2026 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
